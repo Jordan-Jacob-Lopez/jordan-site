@@ -2,6 +2,15 @@
 import React, { useEffect } from "react";
 import { ArrowRight, Mail, Github, Linkedin, FileText, ExternalLink, Flame, PenTool } from "lucide-react";
 import { LinkButton } from "@/components/Button";
+import Image from "next/image";
+import headshot from "@/public/jordan-headshot.jpg";
+
+<Image
+  src={headshot}
+  alt="Portrait of Jordan Lopez"
+  priority
+  className="relative rounded-3xl border border-white/10 bg-white/5 object-cover shadow-2xl"
+/>
 
 // Clean JSX + strict-compiler-safe version
 // - Icons are explicit children (text then icon) so strict parsers don't misread angle brackets
@@ -56,27 +65,46 @@ export default function SiteLanding() {
 
       {/* Hero */}
       <section id="home" className="relative overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl" style={{ height: 520, width: 520 }} />
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-          <div className="max-w-2xl">
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
-              <Flame size={14} aria-hidden="true" />
-              <span>Building useful, calm software</span>
-            </p>
-            <h1 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-50 leading-tight">
-              Product Manager & tinkerer focused on fintech, data, and delightful UX.
-            </h1>
-            <p className="mt-4 text-lg text-zinc-300">
-              I ship outcomes. Former aerospace → systems → fintech PM. I explore ML-powered product loops, self-serve flows, and clear comms.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <LinkButton href="#work" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>See selected work</LinkButton>
-              <LinkButton href="#writing" variant="outline" rightIcon={<PenTool size={16} aria-hidden="true" />}>Read notes</LinkButton>
-              <LinkButton href="/Jordan_Lopez_Resume.pdf" variant="outline" rightIcon={<FileText size={16} aria-hidden="true" />}>Resume</LinkButton>
-            </div>
-          </div>
+  <div className="absolute -top-40 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl" style={{ height: 520, width: 520 }} />
+  <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-16 pb-20">
+    <div className="grid items-center gap-10 lg:grid-cols-2">
+      {/* LEFT: existing text/CTAs */}
+      <div className="max-w-2xl">
+        <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
+          <Flame size={14} aria-hidden="true" />
+          <span>Building useful, calm software</span>
+        </p>
+        <h1 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-50 leading-tight">
+          Product Manager & tinkerer focused on fintech, data, and delightful UX.
+        </h1>
+        <p className="mt-4 text-lg text-zinc-300">
+          I ship outcomes. Former aerospace → systems → fintech PM. I explore ML-powered product loops, self-serve flows, and clear comms.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <LinkButton href="#work" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>See selected work</LinkButton>
+          <LinkButton href="#writing" variant="outline" rightIcon={<PenTool size={16} aria-hidden="true" />}>Read notes</LinkButton>
+          <LinkButton href="/Jordan_Lopez_Resume.pdf" variant="outline" rightIcon={<FileText size={16} aria-hidden="true" />}>Resume</LinkButton>
         </div>
-      </section>
+      </div>
+
+      {/* RIGHT: headshot */}
+      <div className="relative mx-auto w-64 sm:w-72 lg:w-[420px]">
+        {/* soft glow */}
+        <div className="absolute -inset-3 rounded-3xl bg-emerald-500/10 blur-2xl" aria-hidden />
+        <Image
+          src="/jordan-headshot.jpg"            // <-- put file in /public
+          alt="Portrait of Jordan Lopez"
+          width={840}                            // 2x of displayed width for crispness
+          height={1050}                          // keep aspect ratio (4:5 example)
+          priority
+          sizes="(min-width: 1024px) 420px, 70vw"
+          className="relative rounded-full border border-white/10 object-cover shadow-2xl" 
+          />
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Highlights */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-8">
