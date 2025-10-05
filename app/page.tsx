@@ -1,10 +1,13 @@
 'use client';
 import React, { useEffect } from "react";
 import { ArrowRight, Mail, Github, Linkedin, FileText, ExternalLink, Flame, PenTool } from "lucide-react";
-import { LinkButton } from "@/components/Button";
+import { Button, LinkButton } from "@/components/Button";
 
-// Clean JSX version that uses reusable LinkButton CTAs and avoids Tailwind arbitrary values.
-// Includes tiny runtime tests in useEffect.
+// Clean JSX + strict-compiler-safe version
+// - Icons are explicit children (text then icon) so strict parsers don't misread angle brackets
+// - Uses Button/LinkButton for consistent CTA styling
+// - Avoids Tailwind arbitrary values; uses standard utilities or inline styles
+// - Adds lightweight runtime checks ("test cases") in a useEffect to validate CTA structure
 
 export default function SiteLanding() {
   // --- Runtime "tests" (dev sanity checks) ---
@@ -36,7 +39,7 @@ export default function SiteLanding() {
   }, []);
 
   return (
-    <main className="min-h-screen text-zinc-200 antialiased">
+    <main className="min-h-screen bg-neutral-950 text-zinc-200 antialiased">
       {/* Subtle grain overlay */}
       <div
         className="pointer-events-none fixed inset-0 opacity-5"
@@ -66,7 +69,7 @@ export default function SiteLanding() {
               <span>Building useful, calm software</span>
             </p>
             <h1 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-50 leading-tight">
-             Product Manager & tinkerer focused on fintech, data, and delightful UX.
+              Product Manager & tinkerer focused on fintech, data, and delightful UX.
             </h1>
             <p className="mt-4 text-lg text-zinc-300">
               I ship outcomes. Former aerospace → systems → fintech PM. I explore ML-powered product loops, self-serve flows, and clear comms.
@@ -195,3 +198,4 @@ export default function SiteLanding() {
     </main>
   );
 }
+
