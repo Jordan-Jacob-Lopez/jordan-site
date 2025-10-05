@@ -150,7 +150,7 @@ export default function SiteLanding() {
           <div className="lg:col-span-3">
             <h2 className="text-2xl sm:text-3xl font-semibold text-zinc-50">About</h2>
             <p className="mt-4 text-zinc-300 leading-relaxed">
-              I'm Jordan—UCF Aerospace '21 → Systems Engineer → Product at Capital One. I like clean, dark UIs, sharp typography, and building calm, useful tools. I'm currently learning more about ML for product loops and shipping a personal finance site to share approachable guidance.
+              I‘m Jordan—UCF Aerospace ‘21 → Systems Engineer → Product at Capital One. I like clean, dark UIs, sharp typography, and building calm, useful tools. I‘m currently learning more about ML for product loops and shipping a personal finance site to share approachable guidance.
             </p>
             <div className="mt-6 flex items-center gap-4 text-sm">
               <LinkButton href="mailto:jordan@example.com" variant="outline" size="sm" leftIcon={<Mail size={16} aria-hidden="true" />}>Email</LinkButton>
@@ -179,7 +179,7 @@ export default function SiteLanding() {
               <h2 className="text-2xl font-semibold text-zinc-50">Have a project or idea?</h2>
               <p className="mt-1 text-zinc-300">I love collaborating on fintech, data, and UX problems.</p>
             </div>
-            <LinkButton href="mailto:jordan@example.com" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>Let's chat</LinkButton>
+            <LinkButton href="mailto:jordan@example.com" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>Let‘s chat</LinkButton>
           </div>
         </div>
       </section>
