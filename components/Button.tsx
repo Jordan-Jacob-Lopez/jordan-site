@@ -3,12 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-/**
- * Buttons with Tailwind styles for a consistent look.
- * - Button: actions (renders <button>)
- * - LinkButton: navigation (Next <Link> for internal, <a> for external)
- */
-
+/** Buttons with Tailwind styles */
 type Variant = "primary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
@@ -27,11 +22,8 @@ export type ButtonProps = CommonButtonProps &
 
 export type LinkButtonProps = CommonButtonProps & {
   href: string;
-  /** External link target; ignored for internal links */
   target?: React.HTMLAttributeAnchorTarget;
-  /** External link rel; ignored for internal links */
   rel?: string;
-  /** Optional title attribute */
   title?: string;
 };
 
@@ -93,15 +85,12 @@ export function LinkButton({
   );
 
   if (isInternalHref(href)) {
-    // Internal navigation — use Next.js <Link>
     return (
       <Link href={href} className={classes} title={title}>
         {content}
       </Link>
     );
   }
-
-  // External link — use <a>, allow target/rel
   return (
     <a href={href} className={classes} target={target} rel={rel} title={title}>
       {content}
@@ -109,21 +98,18 @@ export function LinkButton({
   );
 }
 
-/* ---------- helpers ---------- */
+/* helpers */
 function cn(...parts: Array<string | undefined | false | null>) {
   return parts.filter(Boolean).join(" ");
 }
-
 function isInternalHref(href: string): boolean {
   return href.startsWith("/") || href.startsWith("#");
 }
 
-/* ---------- tiny runtime tests (dev only) ---------- */
+/* dev-only sanity checks */
 if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
   try {
-    if (cn("a", false, undefined, "b") !== "a b") {
-      console.error("[Button Test] cn join failed");
-    }
+    if (cn("a", false, undefined, "b") !== "a b") console.error("[Button Test] cn join failed");
     (["primary", "outline", "ghost"] as const).forEach(k => {
       if (!variants[k]) console.error(`[Button Test] missing variant styles for ${k}`);
     });
