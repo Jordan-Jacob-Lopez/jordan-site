@@ -1,3 +1,4 @@
+// eslint.config.mjs
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FlatCompat } from "@eslint/eslintrc";
@@ -16,7 +17,7 @@ const config = [
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"],
   },
 
-  // Project-wide rules/overrides
+  // Project-wide rules
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
