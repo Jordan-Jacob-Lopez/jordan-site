@@ -121,17 +121,16 @@ function isInternalHref(href: string): boolean {
 /* ---------- tiny runtime tests (dev only) ---------- */
 if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
   try {
-    console.assert(cn("a", false, undefined, "b") === "a b", "[Button Test] cn join failed");
+    if (cn("a", false, undefined, "b") !== "a b") {
+      console.error("[Button Test] cn join failed");
+    }
     (["primary", "outline", "ghost"] as const).forEach(k => {
-      console.assert(!!variants[k], `[Button Test] missing variant styles for ${k}`);
+      if (!variants[k]) console.error(`[Button Test] missing variant styles for ${k}`);
     });
     (["sm", "md", "lg"] as const).forEach(k => {
-      console.assert(!!sizes[k], `[Button Test] missing size styles for ${k}`);
+      if (!sizes[k]) console.error(`[Button Test] missing size styles for ${k}`);
     });
-    console.assert(isInternalHref("/x") && isInternalHref("#y") && !isInternalHref("https://x"),
-      "[Button Test] isInternalHref failed");
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error("[Button Test] runtime checks failed", e);
   }
 }

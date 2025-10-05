@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from "react";
 import { ArrowRight, Mail, Github, Linkedin, FileText, ExternalLink, Flame, PenTool } from "lucide-react";
-import { Button, LinkButton } from "@/components/Button";
+import { LinkButton } from "@/components/Button";
 
 // Clean JSX + strict-compiler-safe version
 // - Icons are explicit children (text then icon) so strict parsers don't misread angle brackets
@@ -13,28 +13,23 @@ export default function SiteLanding() {
   // --- Runtime "tests" (dev sanity checks) ---
   useEffect(() => {
     try {
-      // Test 1: Hero Work CTA should have text <span> first, then an SVG icon last
       const workCta = document.querySelector('a[href="#work"]');
-      const pass1 = !!(
-        workCta &&
-        workCta.firstElementChild &&
-        workCta.lastElementChild &&
-        workCta.firstElementChild.tagName.toLowerCase() === 'span' &&
-        workCta.lastElementChild.tagName.toLowerCase() === 'svg'
-      );
-      console.assert(pass1, '[Test] Work CTA structure: expected text then icon');
-
-      // Test 2: All CTA-style anchors should end with an SVG icon
-      const ctas = Array.from(document.querySelectorAll('a.inline-flex'));
-      const failing = ctas.filter((a) => a.lastElementChild?.tagName.toLowerCase() !== 'svg');
-      console.assert(failing.length === 0, `[Test] CTA icon position: ${failing.length} failures`);
-
-      // Test 3: Basic render smoke test (main exists)
-      const main = document.querySelector('main');
-      console.assert(!!main, '[Test] <main> not found');
+      const pass1 =
+        !!workCta &&
+        !!workCta.firstElementChild &&
+        !!workCta.lastElementChild &&
+        workCta.firstElementChild.tagName.toLowerCase() === "span" &&
+        workCta.lastElementChild.tagName.toLowerCase() === "svg";
+      if (!pass1) console.error("[Test] Work CTA structure: expected text then icon");
+  
+      const ctas = Array.from(document.querySelectorAll("a.inline-flex"));
+      const failing = ctas.filter(a => a.lastElementChild?.tagName.toLowerCase() !== "svg");
+      if (failing.length !== 0) console.error(`[Test] CTA icon position: ${failing.length} failures`);
+  
+      const main = document.querySelector("main");
+      if (!main) console.error("[Test] <main> not found");
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('[Test] runtime checks failed', e);
+      console.error("[Test] runtime checks failed", e);
     }
   }, []);
 
