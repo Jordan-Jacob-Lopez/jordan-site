@@ -189,7 +189,7 @@ export default function SiteLanding() {
 
       <footer className="py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-sm text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p>© {new Date().getFullYear()} Jordan Lopez</p>
+          <p>© {new Date().getFullYear()}  TEST Jordan Lopez</p>
           <p>Set in Lora for body, system sans for UI.</p>
         </div>
       </footer>
