@@ -1,26 +1,45 @@
+/* Tailwind v4 */
 @import "tailwindcss";
 
+/* ----- Global tweaks (safe across Tailwind versions) ----- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth; /* for #hash links */
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    /* Use raw CSS colors to avoid Tailwind version/color-name differences */
+    background-color: #0b0d0f; /* near-black */
+    color: #e5e7eb; /* zinc-200/gray-200 equivalent */
+    min-height: 100vh;
+  }
+
+  /* Avoid headings being hidden under the sticky header on hash navigation */
+  [id] { scroll-margin-top: 5rem; }
+
+  ::selection { background-color: rgba(16,185,129,0.3); } /* emerald-500 @ 30% */
+
+  a { text-underline-offset: 4px; }
+  a:hover { text-decoration: underline; }
+
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Optional utility classes you can use in components */
+@layer components {
+  .focus-ring {
+    outline: none;
+  }
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 2px rgba(16,185,129,0.7); /* emerald-400-ish */
+  }
 }

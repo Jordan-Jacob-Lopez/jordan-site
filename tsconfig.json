@@ -7,19 +7,21 @@
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [{ "name": "next" }],
+
+    "baseUrl": ".",
     "paths": {
-      "@/components/Button/*": ["./*"]
+      "@/*": ["./*"]
+      /* OR if you want to be stricter just for components:
+      "@/components/*": ["components/*"]
+      */
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
