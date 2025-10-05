@@ -3,11 +3,11 @@
 import * as React from "react";
 import Link from "next/link";
 
-// Button component set with Tailwind classes that match the site's design.
-// Exports:
-//  - Button: for <button> interactions
-//  - LinkButton: for navigation; renders Next.js Link for internal routes ("/" or "#"), <a> for external (http, mailto, tel)
-// Supports leftIcon/rightIcon, variant, size, and fullWidth.
+/**
+ * Buttons with Tailwind styles for a consistent look.
+ * - Button: actions (renders <button>)
+ * - LinkButton: navigation (Next <Link> for internal, <a> for external)
+ */
 
 type Variant = "primary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
@@ -22,8 +22,18 @@ export interface CommonButtonProps {
   children: React.ReactNode;
 }
 
-export type ButtonProps = CommonButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
-export type LinkButtonProps = CommonButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
+export type ButtonProps = CommonButtonProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export type LinkButtonProps = CommonButtonProps & {
+  href: string;
+  /** External link target; ignored for internal links */
+  target?: React.HTMLAttributeAnchorTarget;
+  /** External link rel; ignored for internal links */
+  rel?: string;
+  /** Optional title attribute */
+  title?: string;
+};
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-2xl font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70";
@@ -69,7 +79,9 @@ export function LinkButton({
   className,
   children,
   href,
-  ...props
+  target,
+  rel,
+  title,
 }: LinkButtonProps) {
   const classes = cn(base, variants[variant], sizes[size], fullWidth && "w-full", className);
   const content = (
@@ -80,46 +92,46 @@ export function LinkButton({
     </>
   );
 
-  const isInternal = href.startsWith("/") || href.startsWith("#");
-  if (isInternal) {
-    // Internal navigation uses Next Link
+  if (isInternalHref(href)) {
+    // Internal navigation — use Next.js <Link>
     return (
-      <Link href={href} className={classes} {...(props as any)}>
+      <Link href={href} className={classes} title={title}>
         {content}
       </Link>
     );
   }
-  // External URLs & mailto/tel use plain <a>
+
+  // External link — use <a>, allow target/rel
   return (
-    <a href={href} className={classes} {...props}>
+    <a href={href} className={classes} target={target} rel={rel} title={title}>
       {content}
     </a>
   );
 }
 
-// Minimal className join helper
+/* ---------- helpers ---------- */
 function cn(...parts: Array<string | undefined | false | null>) {
   return parts.filter(Boolean).join(" ");
 }
 
-// Dev-only sanity checks (simple test cases).
-// Safe to ship; runs only in browser, not during SSR, and only in dev mode.
+function isInternalHref(href: string): boolean {
+  return href.startsWith("/") || href.startsWith("#");
+}
+
+/* ---------- tiny runtime tests (dev only) ---------- */
 if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
   try {
-    // Test 1: cn() should drop falsy values and join strings
     console.assert(cn("a", false, undefined, "b") === "a b", "[Button Test] cn join failed");
-
-    // Test 2: Variants map has all keys
-    (["primary","outline","ghost"] as const).forEach(k => {
+    (["primary", "outline", "ghost"] as const).forEach(k => {
       console.assert(!!variants[k], `[Button Test] missing variant styles for ${k}`);
     });
-
-    // Test 3: Sizes map has all keys
-    (["sm","md","lg"] as const).forEach(k => {
+    (["sm", "md", "lg"] as const).forEach(k => {
       console.assert(!!sizes[k], `[Button Test] missing size styles for ${k}`);
     });
+    console.assert(isInternalHref("/x") && isInternalHref("#y") && !isInternalHref("https://x"),
+      "[Button Test] isInternalHref failed");
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error('[Button Test] runtime checks failed', e);
+    console.error("[Button Test] runtime checks failed", e);
   }
 }
