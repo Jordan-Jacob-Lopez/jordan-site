@@ -46,7 +46,10 @@ export default function SiteLanding() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <LinkButton href="#work" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>See selected work</LinkButton>
                 {SHOW_WRITING && (<LinkButton href="#writing" variant="outline" rightIcon={<PenTool size={16} aria-hidden="true" />}>Read notes</LinkButton>)}
-                <LinkButton href="/Jordan_Lopez_Resume.pdf" variant="outline" rightIcon={<FileText size={16} aria-hidden="true" />}>Resume</LinkButton>
+                <LinkButton href="/Jordan_Lopez_Resume.pdf" target="_blank" rel="noopener noreferrer" variant="outline" rightIcon={<FileText size={16} aria-hidden="true" />}
+>
+  Resume
+</LinkButton>
               </div>
             </div>
 

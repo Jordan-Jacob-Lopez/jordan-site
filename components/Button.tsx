@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-/** Buttons with Tailwind styles */
+/** Visual variants & sizes */
 type Variant = "primary" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
@@ -25,6 +25,7 @@ export type LinkButtonProps = CommonButtonProps & {
   target?: React.HTMLAttributeAnchorTarget;
   rel?: string;
   title?: string;
+  download?: boolean | string;
 };
 
 const base =
@@ -74,6 +75,7 @@ export function LinkButton({
   target,
   rel,
   title,
+  download,
 }: LinkButtonProps) {
   const classes = cn(base, variants[variant], sizes[size], fullWidth && "w-full", className);
   const content = (
@@ -85,20 +87,23 @@ export function LinkButton({
   );
 
   if (isInternalHref(href)) {
+    // Internal navigation — Next <Link>. Forward target/rel/download so things like opening a PDF in a new tab work.
     return (
-      <Link href={href} className={classes} title={title}>
+      <Link href={href} className={classes} title={title} target={target} rel={rel} download={download}>
         {content}
       </Link>
     );
   }
+
+  // External link — plain <a>
   return (
-    <a href={href} className={classes} target={target} rel={rel} title={title}>
+    <a href={href} className={classes} target={target} rel={rel} title={title} download={download}>
       {content}
     </a>
   );
 }
 
-/* helpers */
+/* ---------- helpers ---------- */
 function cn(...parts: Array<string | undefined | false | null>) {
   return parts.filter(Boolean).join(" ");
 }
@@ -106,7 +111,7 @@ function isInternalHref(href: string): boolean {
   return href.startsWith("/") || href.startsWith("#");
 }
 
-/* dev-only sanity checks */
+/* ---------- dev-only sanity checks ---------- */
 if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
   try {
     if (cn("a", false, undefined, "b") !== "a b") console.error("[Button Test] cn join failed");
@@ -120,3 +125,4 @@ if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
     console.error("[Button Test] runtime checks failed", e);
   }
 }
+
