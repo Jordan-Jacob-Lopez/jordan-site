@@ -3,6 +3,9 @@ import { ArrowRight, Mail, Github, Linkedin, FileText, ExternalLink, Flame, PenT
 import { LinkButton } from "@/components/Button";
 import { PawnIcon } from "@/components/icons/Pawn";
 import headshot from "@/public/jordan-headshot.jpg";
+import { WORK } from "@/lib/work"; // see alias note below
+import Link from "next/link";
+
 
 export default function SiteLanding() {
   const SHOW_WRITING = false;
@@ -42,7 +45,7 @@ export default function SiteLanding() {
                 Product Manager focused on fintech, data, and delightful UX.
               </h1>
               <p className="mt-4 text-lg text-zinc-300">
-              Solving technical challenges. Aerospace engineering background turned into fintech PM. Previously aerospace engineer → systems engineer → fintech PM. I focus on learning the latest technologies and integrating them within my product roadmaps.              </p>
+              Solving technical challenges. Aerospace engineering background turned into fintech PM. Previously aerospace engineering grad → systems engineer → fintech PM. I focus on learning the latest technologies and integrating them within my product roadmaps.              </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <LinkButton href="#work" variant="primary" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>See selected work</LinkButton>
                 {SHOW_WRITING && (<LinkButton href="#writing" variant="outline" rightIcon={<PenTool size={16} aria-hidden="true" />}>Read notes</LinkButton>)}
@@ -80,40 +83,33 @@ export default function SiteLanding() {
       </section>
 
       {/* Work */}
-      <section id="work" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-zinc-50">Selected Work</h2>
-          <a className="text-sm text-zinc-300 hover:text-white/90 inline-flex items-center gap-1" href="#contact">
-            <span>See more</span>
-            <ExternalLink size={14} aria-hidden="true" />
-          </a>
-        </div>
 
-        <div className="mt-8 grid gap-5 sm:grid-cols-2">
-          {[
-            {
-              tag: "Capital One · Self-Serve Experience",
-              title: "New title maintenance experience",
-              impact: "-$800k/yr op-ex, +status transparency",
-              body: "Led strategy for Capital One Auto Finance’s title maintenance experience, bringing a self-serve workflow with clear comms and agent tooling.",
-            },
-            {
-              tag: "Data migration · QA → Prod",
-              title: "Platform migration QA strategy",
-              impact: "7M+ accts · 100+ attributes integrity",
-              body: "Led validation and business-logic testing between legacy to next-gen platform to ensure continuity across servicing platforms.",
-            },
-          ].map((p, i) => (
-            <article key={i} className="group rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-5 hover:border-white/20 transition">
-              <p className="text-xs uppercase tracking-widest text-zinc-400">{p.tag}</p>
-              <h3 className="mt-2 text-lg font-medium text-zinc-100">{p.title}</h3>
-              <p className="mt-1 text-sm text-zinc-300">{p.body}</p>
-              <p className="mt-3 text-xs text-emerald-400/90">Impact: {p.impact}</p>
-              <LinkButton href="#work" variant="ghost" size="sm" className="mt-4" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>Read more</LinkButton>
-            </article>
-          ))}
-        </div>
-      </section>
+<section id="work" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
+  <div className="flex items-end justify-between gap-4">
+    <h2 className="text-2xl sm:text-3xl font-semibold text-zinc-50">Selected Work</h2>
+    {/* go to full list */}
+    <Link href="/work" className="text-sm text-zinc-300 hover:text-white/90 inline-flex items-center gap-1"> <span>See more</span> <ExternalLink size={14} aria-hidden="true" />
+    </Link>
+
+  </div>
+
+  {/* TOP 2 ONLY */}
+  <div className="mt-8 grid gap-5 sm:grid-cols-2">
+    {WORK.slice(0, 2).map((p) => (
+      <article key={p.slug} className="group rounded-2xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent p-5 hover:border-white/20 transition">
+        <p className="text-xs uppercase tracking-widest text-zinc-400">{p.tag}</p>
+        <h3 className="mt-2 text-lg font-medium text-zinc-100">{p.title}</h3>
+        <p className="mt-1 text-sm text-zinc-300">{p.summary}</p>
+        <p className="mt-3 text-xs text-emerald-400/90">Impact: {p.impact}</p>
+        <LinkButton href={`/work/${p.slug}`} variant="ghost" size="sm" className="mt-4" rightIcon={<ArrowRight size={16} aria-hidden="true" />}>
+          Read case study
+        </LinkButton>
+      </article>
+    ))}
+  </div>
+</section>
+
+
 
       {SHOW_WRITING && (
       <section id="writing" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16">
